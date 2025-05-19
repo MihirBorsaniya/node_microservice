@@ -1,0 +1,26 @@
+# Vercel deployment configuration for the monorepo
+version: 1
+
+# Define the projects (microservices) to deploy
+projects:
+  - name: admin-panel-service
+    root: apps/admin-panel-service
+    build:
+      command: npm run build
+      output: dist
+    routes:
+      - path: /
+        rewrite: /admin-panel-service/
+    env:
+      # Environment variables for the admin-panel-service
+      NODE_ENV: production
+      DB_HOST: $DB_HOST
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+
+# Global settings for deployment
+settings:
+  installCommand: npm install
+  buildCommand: npm run build
+  outputDirectory: dist
